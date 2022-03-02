@@ -2,7 +2,7 @@
 <template>
   <div class="robot" v-if="show">
     <div class="img">
-      <img :src="pic" alt="" />
+      <img :src="pic" />
     </div>
     <div class="left_content">
       <div class="chat_left_triangle"></div>
@@ -28,11 +28,15 @@ export default {
     usertell: {
       immediate: true,
       handler() {
-        let m = /你好/.test(this.listen);
+        // 感冒 | 发烧 | 流鼻涕 | 不舒服 | 头晕 | 胸闷 | 呕吐
+        let m =
+          /(\u611f\u5192|\u53d1\u70e7|\u6d41\u9f3b\u6d95|\u4e0d\u8212\u670d|\u5934\u6655|\u80f8\u95f7|\u5455\u5410)/.test(
+            this.listen
+          );
         if (m) {
-          this.text = "今天天气不错!";
+          this.text = "请测量体温并提供体温数据。";
         } else {
-          this.text = "我不明白您的意思!?请输入'你好'";
+          this.text = "请不要输入与问诊无关的事情。";
         }
       },
     },

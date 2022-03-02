@@ -2,15 +2,37 @@
 <template>
   <div class="box">
     <header>
-      <span>客服</span>
+      <span>在线问诊</span>
     </header>
     <main id="main">
       <span v-text="err" v-show="errshow" class="err"></span>
 
+      <!-- <div class="container">
+        <div class="robot">
+          <div class="img">
+            <img src="./assets/robot.png" />
+          </div>
+          <div class="left_content">
+            <div class="chat_left_triangle"></div>
+            <span>您好，我是您的医生助手。</span>
+          </div>
+        </div>
+        <div class="robot">
+          <div class="img">
+            <img src="./assets/robot.png" />
+          </div>
+          <div class="left_content">
+            <div class="chat_left_triangle"></div>
+            <span
+              >请在下方输入框详细描述病情，以便医生准确了解您的情况，快速接诊。</span
+            >
+          </div>
+        </div> -->
       <div class="container" v-for="(c, index) in counter" :key="index">
         <User :listen="tell" :isshow="show"></User>
         <Robot :listen="tell" :isshow="show"></Robot>
       </div>
+      <!-- </div> -->
     </main>
     <footer>
       <div class="ipt">
@@ -104,12 +126,58 @@ main .container {
   color: red;
   font-size: 1.2rem;
 }
+.robot {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin: 0.5rem 0;
+}
+.img {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: rgb(189, 134, 240);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img img {
+  width: 2rem;
+  height: 2rem;
+}
+.chat_left_triangle {
+  height: 0px;
+  width: 0px;
+  border-width: 0.375rem;
+  border-style: solid;
+  border-color: transparent white transparent transparent;
+  position: absolute;
+  left: 2.5rem;
+  top: 1rem;
+}
+.left_content span {
+  display: inline-block;
+  width: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  color: #0066cc;
+  border-radius: 5px;
+  padding: 0.25rem 0.625rem;
+  line-height: 2rem;
+  font-size: 1.2rem;
+  background-color: #fff;
+  position: relative;
+  top: 0;
+  left: 0.75rem;
+  text-align: left;
+}
 
 /* 底部 */
 footer {
   width: 100vw;
-  height: 2.5rem;
-  background-color: #dddada;
+  height: 3rem;
+  background-color: #f5f5f5;
 }
 footer .ipt {
   flex: 1;
@@ -120,7 +188,7 @@ footer .ipt {
   align-items: center;
 }
 footer .ipt input {
-  width: 75%;
+  width: 70%;
   height: 2.3rem;
   border: none;
   outline: none;
