@@ -5,39 +5,25 @@
       <span>在线问诊</span>
     </header>
     <main id="main">
-      <span v-text="err" v-show="errshow" class="err"></span>
-
-      <!-- <div class="container">
-        <div class="robot">
-          <div class="img">
-            <img src="./assets/robot.png" />
-          </div>
-          <div class="left_content">
-            <div class="chat_left_triangle"></div>
-            <span>您好，我是您的医生助手。</span>
-          </div>
-        </div>
-        <div class="robot">
-          <div class="img">
-            <img src="./assets/robot.png" />
-          </div>
-          <div class="left_content">
-            <div class="chat_left_triangle"></div>
-            <span
-              >请在下方输入框详细描述病情，以便医生准确了解您的情况，快速接诊。</span
-            >
-          </div>
-        </div> -->
+      <el-alert
+        class="alertinfo"
+        title="您好，我是您的医生助手。"
+        description="请在下方输入框详细描述病情，以便医生准确了解您的情况，快速接诊。"
+        v-show="infoshow"
+        type="info"
+        :center="false"
+        :closable="true"
+      >
+      </el-alert>
       <div class="container" v-for="(c, index) in counter" :key="index">
         <User :listen="tell" :isshow="show"></User>
         <Robot :listen="tell" :isshow="show"></Robot>
       </div>
-      <!-- </div> -->
     </main>
     <footer>
       <div class="ipt">
         <input type="text" v-model="ipt" @keyup.enter="send" autofocus />
-        <button @click="send">发送</button>
+        <el-button type="primary" @click="send">发送</el-button>
       </div>
     </footer>
   </div>
@@ -57,7 +43,7 @@ export default {
       // 先渲染一次
       counter: [{ type: "test" }],
       err: "输入不能为空！",
-      errshow: false,
+      infoshow: false,
     };
   },
   components: {
@@ -71,12 +57,25 @@ export default {
       this.show = true;
       this.errshow = false;
       if (!this.ipt ?? "" === "") {
-        this.errshow = true;
+        this.errOpen();
       } else {
         this.counter.push({ type: "user" });
       }
       this.ipt = "";
     },
+    errOpen() {
+      this.Notification({
+        title: "错误",
+        type: "error",
+        message: "输入不允许为空！",
+        duration: 2000,
+        position: "top-right",
+        customClass: "errmessage",
+      });
+    },
+  },
+  created() {
+    this.infoshow = true;
   },
   // 滚动条置底
   updated() {
@@ -115,10 +114,10 @@ main {
   background-color: skyblue;
   overflow-x: hidden;
   overflow-y: auto;
-  text-align: center;
+  /* text-align: center; */
 }
 main .container {
-  margin: 1rem 1.5rem 0;
+  margin: 0 1.5rem 0;
   display: flex;
   flex-flow: wrap;
 }
@@ -126,53 +125,12 @@ main .container {
   color: red;
   font-size: 1.2rem;
 }
-.robot {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  margin: 0.5rem 0;
-}
-.img {
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: rgb(189, 134, 240);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.img img {
-  width: 2rem;
-  height: 2rem;
-}
-.chat_left_triangle {
-  height: 0px;
-  width: 0px;
-  border-width: 0.375rem;
-  border-style: solid;
-  border-color: transparent white transparent transparent;
-  position: absolute;
-  left: 2.5rem;
-  top: 1rem;
-}
-.left_content span {
-  display: inline-block;
-  width: auto;
-  word-wrap: break-word;
-  word-break: break-all;
-  color: #0066cc;
-  border-radius: 5px;
-  padding: 0.25rem 0.625rem;
-  line-height: 2rem;
-  font-size: 1.2rem;
-  background-color: #fff;
-  position: relative;
-  top: 0;
-  left: 0.75rem;
-  text-align: left;
-}
 
+.alertinfo {
+  width: 80% !important;
+  margin: 0 auto;
+  font-size: 0.5rem !important;
+}
 /* 底部 */
 footer {
   width: 100vw;
@@ -205,5 +163,22 @@ footer .ipt button {
   font-size: 1.2rem;
   border-radius: 10px;
   cursor: pointer;
+  padding: 0.75rem 1.25rem !important;
+}
+</style>
+<style>
+.errmessage {
+  width: 12.5rem !important;
+  top: 3.5rem !important;
+}
+.infomessage {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  color: #fff !important;
+  font-size: 1rem !important;
+  top: 3.5rem !important;
+}
+.infospan {
+  color: #fff;
+  font-size: 1rem;
 }
 </style>

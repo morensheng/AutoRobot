@@ -48,6 +48,11 @@ export default {
   width: 2rem;
   height: 2rem;
 }
+.right_content{
+  width: 85%;
+  position: relative;
+  text-align: right;
+}
 .chat_right_triangle {
   height: 0px;
   width: 0px;
@@ -55,12 +60,11 @@ export default {
   border-style: solid;
   border-color: transparent transparent transparent #ba5fe4;
   position: absolute;
-  right: 2.5rem;
-  top: 1rem;
+  right: .2rem;
+  top: .85rem;
 }
 .right_content span {
   display: inline-block;
-  width: auto;
   word-wrap: break-word;
   word-break: break-all;
   color: #0066cc;
@@ -70,8 +74,8 @@ export default {
   font-size: 1.2rem;
   background-color: #ba5fe4;
   position: relative;
-  top: 0.2rem;
-  right: 0.7rem;
+  top: 0;
+  right: .95rem;  
   text-align: left;
 }
 </style>

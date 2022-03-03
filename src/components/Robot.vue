@@ -6,13 +6,15 @@
     </div>
     <div class="left_content">
       <div class="chat_left_triangle"></div>
-      <span>{{ text }}</span>
+      <span v-show="messshow"> <Symp></Symp> </span>
+      <span v-show="!messshow">{{ text }}</span>
     </div>
   </div>
 </template>
 
 /* 配置组件数据、交互、事件等等 */
 <script>
+import Symp from "./Symp.vue";
 export default {
   name: "Robot",
   data() {
@@ -21,7 +23,11 @@ export default {
       show: this.isshow,
       usertell: this.listen,
       text: "我不明白您的意思!?请输入'你好'",
+      messshow: false,
     };
+  },
+  components: {
+    Symp,
   },
   props: ["listen", "isshow"],
   watch: {
@@ -34,7 +40,8 @@ export default {
             this.listen
           );
         if (m) {
-          this.text = "请测量体温并提供体温数据。";
+          // this.text = "请测量体温并提供体温数据。";
+          this.messshow = true;
         } else {
           this.text = "请不要输入与问诊无关的事情。";
         }
@@ -66,6 +73,11 @@ export default {
   width: 2rem;
   height: 2rem;
 }
+.left_content{
+  width: 85%;
+  position: relative;
+  text-align: left;
+}
 .chat_left_triangle {
   height: 0px;
   width: 0px;
@@ -73,12 +85,11 @@ export default {
   border-style: solid;
   border-color: transparent white transparent transparent;
   position: absolute;
-  left: 2.5rem;
-  top: 1rem;
+  left: .2rem;
+  top: .85rem;
 }
 .left_content span {
   display: inline-block;
-  width: auto;
   word-wrap: break-word;
   word-break: break-all;
   color: #0066cc;
@@ -89,7 +100,7 @@ export default {
   background-color: #fff;
   position: relative;
   top: 0;
-  left: 0.75rem;
+  left: .88rem;
   text-align: left;
 }
 </style>
