@@ -6,8 +6,8 @@
     </div>
     <div class="left_content">
       <div class="chat_left_triangle"></div>
-      <span v-show="messshow"> <Symp></Symp> </span>
-      <span v-show="!messshow">{{ text }}</span>
+      <span v-show="messbtn"> <Symp @submit="submitInfo"></Symp> </span>
+      <span v-show="messtext">{{ text }}</span>
     </div>
   </div>
 </template>
@@ -22,31 +22,54 @@ export default {
       pic: require("../assets/robot.png"),
       show: this.isshow,
       usertell: this.listen,
-      text: "我不明白您的意思!?请输入'你好'",
-      messshow: false,
+      text: "",
+      messbtn: false,
+      messtext: false,
+      robotInfo: "",
     };
   },
   components: {
     Symp,
   },
   props: ["listen", "isshow"],
+  methods: {
+    submitInfo(dataInfo) {
+      this.messtext = true;
+      this.text = "本人病情为";
+      for (let i = 0; i < dataInfo.length; i++) {
+        if (dataInfo[i].ischeck > 1) {
+          this.text += "“" + dataInfo[i].name + "(较严重)，" + "”";
+        } else {
+          this.text += "“" + dataInfo[i].name + "，" + "”";
+        }
+      }
+    },
+  },
   watch: {
     usertell: {
       immediate: true,
       handler() {
-        // 感冒 | 发烧 | 流鼻涕 | 不舒服 | 头晕 | 胸闷 | 呕吐
+        // 咳嗽 | 感冒 | 发烧 | 流鼻涕 | 不舒服 | 头晕 | 胸闷 | 呕吐 | 头痛
         let m =
-          /(\u611f\u5192|\u53d1\u70e7|\u6d41\u9f3b\u6d95|\u4e0d\u8212\u670d|\u5934\u6655|\u80f8\u95f7|\u5455\u5410)/.test(
+          /(\u54b3\u55fd|\u611f\u5192|\u53d1\u70e7|\u6d41\u9f3b\u6d95|\u4e0d\u8212\u670d|\u5934\u6655|\u80f8\u95f7|\u5455\u5410|\u5934\u75db)/.test(
             this.listen
           );
         if (m) {
-          // this.text = "请测量体温并提供体温数据。";
-          this.messshow = true;
+          this.messbtn = true;
+          this.messtext = false;
+          m = "";
         } else {
+          this.messtext = true;
           this.text = "请不要输入与问诊无关的事情。";
+          m = "";
         }
       },
     },
+  },
+  // 滚动条置底
+  updated() {
+    let ele = document.getElementById("main");
+    ele.scrollTop = ele.scrollHeight;
   },
 };
 </script>
@@ -73,8 +96,8 @@ export default {
   width: 2rem;
   height: 2rem;
 }
-.left_content{
-  width: 85%;
+.left_content {
+  width: 80%;
   position: relative;
   text-align: left;
 }
@@ -85,8 +108,8 @@ export default {
   border-style: solid;
   border-color: transparent white transparent transparent;
   position: absolute;
-  left: .2rem;
-  top: .85rem;
+  left: 0.2rem;
+  top: 0.85rem;
 }
 .left_content span {
   display: inline-block;
@@ -100,7 +123,7 @@ export default {
   background-color: #fff;
   position: relative;
   top: 0;
-  left: .88rem;
+  left: 0.88rem;
   text-align: left;
 }
 </style>

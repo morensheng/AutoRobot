@@ -49,7 +49,7 @@ export default {
   height: 2rem;
 }
 .right_content{
-  width: 85%;
+  width: 80%;
   position: relative;
   text-align: right;
 }

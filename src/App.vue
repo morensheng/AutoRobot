@@ -114,10 +114,9 @@ main {
   background-color: skyblue;
   overflow-x: hidden;
   overflow-y: auto;
-  /* text-align: center; */
 }
 main .container {
-  margin: 0 1.5rem 0;
+  margin: 0 1rem 0;
   display: flex;
   flex-flow: wrap;
 }
@@ -130,6 +129,9 @@ main .container {
   width: 80% !important;
   margin: 0 auto;
   font-size: 0.5rem !important;
+  position: fixed !important;
+  left: 10%;
+  z-index: 99999;
 }
 /* 底部 */
 footer {

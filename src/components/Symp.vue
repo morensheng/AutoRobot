@@ -61,6 +61,7 @@ export default {
       ],
       // 用户选中的按钮
       subarr: [],
+      errFlag: false,
     };
   },
   methods: {
@@ -79,7 +80,19 @@ export default {
           this.subarr.push(this.list[i]);
         }
       }
-      console.log(this.subarr);
+      if (this.subarr.length == 0) {
+        this.Notification({
+          title: "错误",
+          type: "error",
+          message: "您还没选择",
+          duration: 2000,
+          position: "top-right",
+          customClass: "errmessage",
+        });
+      } else {
+        this.$emit("submit", this.subarr);
+        this.subarr = [];
+      }
     },
   },
 };
